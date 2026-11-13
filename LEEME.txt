@@ -61,6 +61,6 @@ Las cifras se leen del archivo datos/estadisticas.json. Para
 actualizarlas: abre ese archivo en GitHub, pulsa el lápiz (Edit),
 cambia los números, ajusta "actualizado" a la fecha del día y haz
 Commit changes. La página se actualiza sola en uno o dos minutos.
-Cuenta los manuscritos desde la hoja de respuestas del Google Form
-(privada, en el Drive de c_psicologia@uagrm.edu.bo). Nunca publiques
-la hoja de respuestas: contiene nombres y correos de los postulantes.
+Cuenta los manuscritos desde la bandeja del correo editorial
+(revistacientifica.psicologia@uagrm.edu.bo). Nunca publiques datos
+de los postulantes: la página solo muestra totales.
