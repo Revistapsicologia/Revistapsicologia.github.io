@@ -1,0 +1,55 @@
+ÑE RENDA — SITIO WEB DE LA REVISTA
+Instructivo de la carpeta · Noviembre de 2026
+
+QUÉ HAY AQUÍ
+------------
+index.html            Página principal (presentación, alcance, número actual,
+                      equipo, normas, ética, licencia y formulario de contacto)
+articulo-01.html a    Una página por artículo, con resumen, palabras clave,
+articulo-08.html      cómo citar y botón de descarga del PDF
+css/estilos.css       Los estilos del sitio (colores y tipografías de la marca)
+img/                  Carpeta para logos y portada (ahora vacía)
+pdf/                  Carpeta para los PDF (ahora vacía)
+
+ANTES DE SUBIR: COMPLETAR
+-------------------------
+1. Quedan solo tres datos entre corchetes en index.html: el correo
+   editorial (aparece dos veces), la fecha de cierre de la
+   convocatoria del N.º 2 y el comité científico externo.
+   IMPORTANTE: las citas "Cómo citar" de cada artículo usan la
+   dirección https://revistapsicologia.github.io/... — eso requiere
+   renombrar el repositorio a Revistapsicologia.github.io.
+
+2. YA INCLUIDOS en esta versión: la portada (img/), el número
+   completo y los ocho artículos por separado (pdf/), y todos los
+   títulos, autores, resúmenes y palabras clave, tomados del PDF
+   oficial del 13 de noviembre de 2026.
+   Falta solo:
+   img/logo-b07.png           Avatar cuadrado (y descomenta su línea
+                              en index.html, sección LOGO)
+   img/favicon.png            El mismo B07 reducido (y descomenta la
+                              línea FAVICON en index.html)
+   pdf/normas-autores.pdf     Las normas para autores (y reponer su
+                              enlace en index.html)
+
+3. El formulario: GitHub Pages no procesa formularios.
+   Opción A (recomendada): cuenta gratuita en formspree.io con el
+     correo editorial; crea un formulario y reemplaza TU_CODIGO en
+     index.html (busca "formspree") por el código que te da.
+   Opción B: crea un Google Form y reemplaza el <form> completo por
+     el enlace, como indica el comentario en index.html.
+
+SUBIR A GITHUB
+--------------
+1. Cuenta en github.com con el correo editorial (usuario sugerido: nerenda).
+2. New repository → nombre exacto: nerenda.github.io → Public → Create.
+3. Add file → Upload files → arrastra TODO el contenido de esta carpeta
+   (index.html debe quedar en la raíz) → Commit changes.
+4. Espera 1–2 minutos y abre https://nerenda.github.io
+5. Para actualizar: vuelve a subir el archivo corregido con el mismo nombre.
+
+REGLA ÉTICA DEL SITIO
+---------------------
+Las páginas de los estudios de caso solo llevan el resumen aprobado del
+artículo. Nunca añadir citas textuales de los casos, edades, lugares ni
+ningún dato que permita identificar a los participantes.
