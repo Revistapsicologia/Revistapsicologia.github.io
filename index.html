@@ -240,47 +240,82 @@
 <p class="numero-etiqueta">Convocatoria abierta</p>
 <h2>¿Tienes un trabajo para el N.º 2?</h2>
 <p>Cuéntanos de qué trata y te escribimos con los pasos para enviarlo. Aquí también publican estudiantes: el próximo puede ser el tuyo.</p>
-<p class="nota-suave">Cierre de recepción: [fecha]. Consultas: [correo editorial institucional].</p>
+<p class="nota-suave">Cierre de recepción: [fecha]. Consultas: <a href="mailto:c_psicologia@uagrm.edu.bo">c_psicologia@uagrm.edu.bo</a>.</p>
 </div>
 <div class="seccion-cuerpo">
-<!-- FORMULARIO: GitHub Pages no procesa formularios por sí solo.
-     Opción A (recomendada): crea una cuenta gratuita en formspree.io con el correo editorial,
-     crea un formulario y reemplaza TU_CODIGO en la línea siguiente por el código que te da Formspree.
-     Opción B: crea un Google Form institucional y reemplaza todo este <form> por:
-     <a class="boton boton-rojo" href="URL_DEL_GOOGLE_FORM">Abrir el formulario de contacto</a> -->
-<form class="formulario" action="https://formspree.io/f/TU_CODIGO" method="POST">
-<label>Nombre completo
-<input type="text" name="nombre" required autocomplete="name">
-</label>
-<label>Correo electrónico
-<input type="email" name="correo" required autocomplete="email">
-</label>
-<label>Institución
-<input type="text" name="institucion">
-</label>
-<label>Escribes como
-<select name="rol">
-<option>Docente o investigador</option>
-<option>Estudiante de pregrado o tesista</option>
-<option>Psicólogo en ejercicio</option>
-<option>Otro</option>
-</select>
-</label>
-<label class="campo-ancho">Título o tema tentativo
-<input type="text" name="tema" required>
-</label>
-<label class="campo-ancho">Cuéntanos brevemente el trabajo (opcional)
-<textarea name="mensaje" rows="4"></textarea>
-</label>
-<label class="casilla campo-ancho">
-<input type="checkbox" name="acepto" required>
-<span>Acepto que la revista use estos datos solo para responder a mi consulta.</span>
-</label>
-<button class="boton boton-rojo campo-ancho" type="submit" style="justify-self: start;">Enviar</button>
-</form>
+<!-- El botón abre el Google Form de la convocatoria; las respuestas llegan al Drive de c_psicologia@uagrm.edu.bo -->
+<div class="formulario" style="display: flex; flex-direction: column; gap: 16px;">
+<p style="margin: 0; font-size: 1.05rem;">Completa el formulario de postulación, o escríbenos directamente al correo de la carrera.</p>
+<div class="botones">
+<a class="boton boton-rojo" id="boton-formulario" href="https://docs.google.com/forms/d/e/1FAIpQLScNHgUABU08F3pAi4HKg8wVbyCsZcGMe62VkIEropSdbMZSIQ/viewform" target="_blank" rel="noopener">Postular un manuscrito</a>
+<a class="boton boton-borde-oscuro" href="mailto:c_psicologia@uagrm.edu.bo?subject=Postulaci%C3%B3n%20de%20manuscrito%20%E2%80%94%20%C3%91e%20Renda%20Vol.%201%2C%20N.%C2%BA%202&body=Nombre completo: %0AInstitucion: %0AEscribo como (docente o investigador / estudiante o tesista / psicologo en ejercicio / otro): %0ATipo de trabajo (articulo de investigacion / revision / estudio de caso / ensayo): %0ATitulo o tema tentativo: %0ABreve descripcion del trabajo: %0A%0AAcepto que la revista use estos datos solo para gestionar mi postulacion.">Postular por correo</a>
+</div>
+<p style="margin: 0; font-size: 15px; color: #3A4558;">Correo editorial: <a href="mailto:c_psicologia@uagrm.edu.bo">c_psicologia@uagrm.edu.bo</a></p>
+<p style="margin: 0; font-size: 14px; color: #56698A;">El botón de correo abre un mensaje con los datos que necesitamos ya listados: solo hay que completarlos y enviar.</p>
+</div>
 </div>
 </div>
 </section>
+
+<section class="contenedor estadisticas" id="estadisticas" hidden>
+<h2>La convocatoria en cifras</h2>
+<div class="est-cifras">
+<div class="est-cifra"><p class="num" id="est-recibidos">—</p><p class="rot">Manuscritos recibidos</p></div>
+<div class="est-cifra"><p class="num" id="est-revision">—</p><p class="rot">En revisión por pares</p></div>
+<div class="est-cifra"><p class="num" id="est-aceptados">—</p><p class="rot">Aceptados</p></div>
+</div>
+<div class="est-controles" role="group" aria-label="Ver distribución">
+<button type="button" id="btn-tipo" aria-pressed="true">Por tipo de trabajo</button>
+<button type="button" id="btn-perfil" aria-pressed="false">Por perfil del autor</button>
+</div>
+<div class="est-barras" id="est-barras" aria-live="polite"></div>
+<p class="est-nota" id="est-nota"></p>
+</section>
+
+<script>
+(function () {
+  fetch('datos/estadisticas.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+    .then(function (d) {
+      var sec = document.getElementById('estadisticas');
+      sec.hidden = false;
+      document.getElementById('est-recibidos').textContent = d.recibidos;
+      document.getElementById('est-revision').textContent = d.en_revision;
+      document.getElementById('est-aceptados').textContent = d.aceptados;
+      var nota = 'Actualizado: ' + d.actualizado + '.';
+      if (d.nota) nota += ' ' + d.nota + '.';
+      document.getElementById('est-nota').textContent = nota;
+
+      var cont = document.getElementById('est-barras');
+      function dibujar(grupo) {
+        cont.innerHTML = '';
+        var max = 0, k;
+        for (k in grupo) if (grupo[k] > max) max = grupo[k];
+        for (k in grupo) {
+          var fila = document.createElement('div'); fila.className = 'est-fila';
+          var rot = document.createElement('span'); rot.textContent = k;
+          var pista = document.createElement('div'); pista.className = 'est-pista';
+          var barra = document.createElement('div'); barra.className = 'est-barra';
+          var val = document.createElement('span'); val.className = 'est-valor';
+          val.textContent = grupo[k];
+          pista.appendChild(barra); fila.appendChild(rot); fila.appendChild(pista); fila.appendChild(val);
+          cont.appendChild(fila);
+          (function (b, v) {
+            requestAnimationFrame(function () { b.style.width = (max ? (v / max) * 100 : 0) + '%'; });
+          })(barra, grupo[k]);
+        }
+      }
+      var bt = document.getElementById('btn-tipo'), bp = document.getElementById('btn-perfil');
+      function activar(boton, otro, grupo) {
+        boton.setAttribute('aria-pressed', 'true'); otro.setAttribute('aria-pressed', 'false'); dibujar(grupo);
+      }
+      bt.addEventListener('click', function () { activar(bt, bp, d.por_tipo); });
+      bp.addEventListener('click', function () { activar(bp, bt, d.por_perfil); });
+      dibujar(d.por_tipo);
+    })
+    .catch(function () { /* sin datos, la sección queda oculta */ });
+})();
+</script>
 
 <footer class="pie">
 <div class="contenedor pie-fila">
@@ -290,7 +325,7 @@
 <p>Santa Cruz de la Sierra, Bolivia · ISSN en trámite</p>
 </div>
 <div>
-<p>[correo editorial institucional]</p>
+<p><a href="mailto:c_psicologia@uagrm.edu.bo" style="color: #E3E8F0">c_psicologia@uagrm.edu.bo</a></p>
 <p>Instagram · Facebook · LinkedIn: @nerenda.psicologia</p>
 </div>
 </div>
